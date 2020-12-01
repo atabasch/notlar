@@ -1,0 +1,818 @@
+# SANAL MAKİNE KURULUMU
+	> pip install virtualenv
+	> virtualenv vname
+	> vname\Scripts\activate
+
+
+
+===========================================================================================================
+# DJANGO KURULUMU
+	> pip install django==Sürüm
+
+ 
+
+
+===========================================================================================================
+# PROJE OLUŞTURMAK
+	> django-admin startproject pname .
+
+
+
+
+
+===========================================================================================================
+# PROJE AYARLARININ YAPILMASI
+	→ pname/settings.py
+		• TEMPLATES > 'DIRS': [os.path.join(BASE_DIR, 'Templates_klasör_adı')],
+		• LANGUAGE_CODE = 'tr'
+		• TIME_ZONE = 'Europe/Istanbul'
+
+		! MYSQL DATABASE KULLANMAK İÇİN
+			> pip install mysqlclient
+			• DATABASES = {
+				    'default': {
+				        'ENGINE': 'django.db.backends.mysql',
+				        'HOST': 'localhost',
+				        'PORT': '',
+				        'USER': '',
+				        'PASSWORD': '',
+				        'NAME': ''
+				    }
+				}
+
+
+
+
+
+===========================================================================================================
+# PROJE İÇİN DATABASE KURULUMU VE SUPER KULLANICI OLUŞTURMAK
+	> manage.py migrate
+	> manage.py createuser
+
+
+
+
+===========================================================================================================
+# SİTEYİ GÖRÜNTÜLEMEK İÇİN SERVERI ÇALIŞTIRMAK
+	> manage.py runserver	!> veritabanını oluşturmadan çalıştırma
+
+
+
+
+===========================================================================================================
+# UYGULAMA OLUŞTURMAK
+	> manage.py startapp appdirname
+
+
+
+
+===========================================================================================================
+# VERİTABANI VE FORM İÇİN UYGULAMAYA MODEL OLUŞTURMAK
+	→ appdir/models.py
+	• ...
+		from django.utils.text import slugify !> slug işlemi için
+		from django.urls import reverse !> linkleme işlemi
+
+		class ModulName(models.Model):
+			c_name = models.FieldMethod(options)
+
+			def save(self, *args, **kargs):
+				// Her update işleminde çalışılması istenen kodlar
+				super(ModulName, self).save(args, kargs)
+
+			def __str__(self):
+				return // objenin döndürmesini istediğiniz yazı
+
+			def get_detail_url(self):
+				return reverse('url_name', kwargs={'par': self.par})
+
+				!> Her uygulamaya aynı url ismini vermek istersen urls.py içinde app_name = 'appismi' gibi
+					Bir tanımlama yap. Böylece appismi:url_name şeklinde çağırabilirsin.
+
+
+			class Meta:
+				ordering = ["hucre", "-hucre"]
+				verbose_name_plural = 'Uygulama Çoğul Adı Ör: Sayfalar'
+				verbose_name = 'Uygulama tekil adı Ör: Sayfa'
+
+
+
+
+===========================================================================================================
+# MODÜLÜ PROJEYE TANITMAK
+	→ projectdir/settings.py
+		• INSTALLED_APPS = [
+							...,
+							'appname',
+						]
+
+
+
+
+===========================================================================================================
+# MİGRATİON İŞLEMLERİ VE MODÜLÜ VERİTABANINA İŞLEMEK
+	> manage.py makemigrations	!> migrasyon dosyalarını hazırla
+	> manage.py migrate 	!> migrasyonu başlat ve db ye yaz.
+
+
+
+
+===========================================================================================================
+# UYGULAMAYI ADMİN PANELİNE ENTEGRE ETMEK
+	→ appdir/admin.py
+		• ...
+		from .models import ModelName
+		admin.site.register(ModelName)
+
+===========================================================================================================
+# UYGULAMANIN ADMIN PANELİNDEKİ DÜZENLEMELERİNİ YAPMAK
+	→ appdir/admin.py
+		!>  Düzenlenecek olan modül için yeni bir admin classı oluşturulur.
+			Düzenlemeler bu class içinde belirlenir ve modelin kayıt edildiği
+			register methoduna 2. parametre olarak verirlir
+		• ...
+		class AdminModeForModelName(admin.ModelAdmin):
+			// düzenleme kodları
+			list_display 		= ('c_name', 'c_name', ...)	!> Listede gösterilecek alanlar
+			list_display_links  = ('c_name', 'c_name', ...)	!> Listede detay linki alacak alanlar
+			list_filter 		= ('c_name', 'c_name', ...)	!> Filtere uygulanabilecek alanlar
+			search_fields		= ('c_name', 'c_name', ...)	!> Listede arama kutusu kullanılacak alanlar.
+			readonly_fields 	= ['c_name', 'c_name', ...] !> Sadece okunabilir düzenlenemez alanlar
+			empty_value_display = '-empty-'	!> Boş alanlara ne yazılsın.
+			list_per_page = x
+			list_select_related !!! BAKILACAK
+			list_max_show_all !!!
+			ordering = ['-c_column', 'column']	!> Listede neye göre sıralama yapılacak.
+			autocomplete_fields !!!
+
+			class Meta:
+				model = ModulName
+
+
+===========================================================================================================
+# URL İŞLEMLERİ İÇİN AYARLAMALAR YAPMAK
+	→ projectdir/urls.py
+		• import appdir.urls !>
+			urlpatterns = [ ..., path('link/', include(appdir.urls)) ]
+
+	→ appdir/urls.py !> Dosya yoksa oluştur.
+	!>  view_func_name → appdir/views.py dosyası içinde oluşturduğumuz fonksiyonlardır.
+		template dosyalarımızı bu fonksiyonlar içinde render ediyoruz.
+
+		• 	from django.urls import path
+			from .views import *
+
+			urlpatterns = [
+				path('', view_func_name) ,
+				path('<type:par_name>', view_func_name) ,
+				path('<int:id>', view_func_name) ,
+				path('custom_text/text/', view_func_name),
+			    path('custom_text/<int:year>/', view_func_name),
+			    path('custom_text/<int:year>/<int:month>/', view_func_name),
+			    path('custom_text/<int:year>/<int:month>/<slug:slug>/', view_func_name),
+			]
+
+
+
+
+
+===========================================================================================================
+# TEMPLATE İŞLEMLERİ İÇİN VIEWS DOSYALARININ DÜZENLENMESİ.
+!> Template dosyalarından html dosyalarını render etmek için ana klasörde.
+	projectdir/settings.py dosyasında yazdığımız Templates_klasör_adı adında klasör oluşturalım ve
+	siteye render edeceğimiz html dosayalarını bu alanda oluşturalım.
+
+	→ appdir/views.py
+		• ...
+			from .models import *
+
+			def view_fonksiyonu_adı(request, varsa, parametreler):
+				// Bu alanda database ve diğer işlemler yapılabilir
+				return render(request, 'view_templates_dosyası.html', datalar_sözlüğü)
+
+	!> Bu işlemler yapıldıktan sonra bir url işlemi yapılır ve hangi url de hangi sayfa görünecek ayarlanır.
+	→ appdir/urls.py
+		• urlpatterns = [ ..., path('text/<type:key>', view_fonksiyonu_adı, name='url_için_isim') ]
+
+
+
+===========================================================================================================
+# HTML DOSYALARINDA KULLANILABİLİR KODLAR
+!> Değişkenler views.py de render ile 3. parametrede sözlük olarak gönderilir
+	• {{ değişken }} → değişken değerini yaz
+	• {% url 'view_fonksiyo_adı' varsa parametre %} → Link ver
+
+	• {% for item in items %}
+	• {% empty %} → Bu koddan sonraki bölüm items yoksa yada boşsa çalışır.
+	• {% cycle x y z ... %} → Her döngüde sırayla parametreleri yazar
+	• {% endfor %}
+
+	• {% comment %} → Yorum satırı başlat
+	• {% endcomment %} → Yorum satırını bitir
+
+	• {% if x == y %}
+	• {% elif %}
+	• {% else %}
+	• {% endif %}
+		!	x == y
+			x != y
+			x > y
+			x < y
+			x|divisibleby:y
+			x in y
+			not x in y
+	• {% ifequal a b %} ... {% endifequal %}
+	• {% ifnotequal a b %} ... {% endifnotequal %}
+
+	• {% now "d F Y H:i D M " %}
+
+	# FİLTRLER
+		!> {{ degisken|filtre:'parametre' }} şeklinde yazılır.
+			x_time|timesince -> önce yazıldı
+			val|linebreaks -> textarea daki enterları ekrana basar
+			val|truncatewords:X -> X kadar kelimeyi gösterir.
+			val|truncatewords_html:X -> X kadar kelimeyi gösterir.
+			val|truncatechars:X -> X kadar karakter gösterir.
+			val|truncatechars_html:X -> X kadar karakter gösterir.
+			val|date:"D d M Y l"
+			val|time:"H:i"
+			now "jS F Y H:i"
+			value|capfirst -> İlk harfi büyük yazar
+			value|upper
+			value|lower
+			value|title
+			value|make_list -> Tek tek liste yapar
+			value|center:"15" -> Yazıyı ortalar
+			value|ljust:"10"
+			value|cut:" " -> Boşlukları siler
+			value|default:"nothing"  -> Değier yoksa gösterilecek
+			value|slugify
+			some_list|slice:":2" -> belli kuraldakileri getirir.
+			value|striptags -> Html taglarını kaldırır.
+			value|urlize
+			value|urlizetrunc:15
+			value|wordcount -> kelime sayısı
+			value|wordwrap:5
+			alue|yesno:"yeah,no,maybe"
+
+
+
+
+	# ŞABLON BLOCK İŞLEMLERİ
+		! ANA MASTER PAGE
+			• {% block blockname %}
+			• {% endblock %}
+
+		! ALT SAYFALARDA
+			• {% extends 'master_page.html' %}
+			• {% block blockname %}
+				// Bu sayfa daki html kodları
+			• {% endblock %}
+
+		! HTML DOSYASI ÇAĞIRMAK İÇİN
+			• {% include 'dosya_adi.html' %}
+
+		!> Title içinde bu alanlar kullanılabilir. Örneğin
+			→ base.html
+				• <title>{% block title %}Default Değer{% endblock %}</title>
+			→ sub.html
+				• {% block title %} Title yazısı - {{ block.super }} {% endblock %}
+
+
+
+===========================================================================================================
+# LİNKLERİ DİNAMİK HALE GETİRMEK
+!> Sayfalar adında bir uygulama var ve bu uygulamayı şablonlarda listelerken url kısmına
+	öyle bir şey yazalım ki her zaman dinamik olarak o anki nesnein linkini getirecek.
+
+	→ appdir/urls.py
+		• path('detay/<int:id>', view_fonksiyonu, name='detay')
+	→ appdir/models.py
+		• from django.urls import reverse
+		• app_name = 'sayfa'
+		!> Daha sonra hangi modelde bu işler yapılacaksa ona bir fonksiyon oluşturulmalı.
+		   Bu fonksiyon linki döndürecek olan fonksiyon
+		• def get_detay_linki(self):
+			return reverse('sayfa:detay', kwargs={'id':self.id})
+	→ viewsdir/viewfile.html
+		• {{ nesne.get_detay_linki }}
+
+	Bu işlemi formları save ettikten sonra kullanabiliriz.
+
+# SAVE İŞLEMİNDEN SONRA VIEWS DOSYASINDA YÖNLENDİRME YAPMAK
+	→ appdir/views.py
+		• from django.shortcuts	import HttpResponseRedirect
+		!> Daha sonra yönlendiermk istediğimiz satıra.
+		• post = form.save()
+		• return HttpResponseRedirect(post.get_url_func())
+
+
+
+===========================================================================================================
+# FORMS OLUŞTURMAK
+!> 	Formlar sitelerde veri işlemek için gerekli olan alanlardır.
+	Bunları el ile manuel hazırlayabileceğimiz gibi modeller import ederek modele ait olarak otomatik oluşturabiliriz<
+	Kendimiz form oluştururken django içindeki forms kütüphanesini dahil etmemiz yeterlidir.
+	Ama eğer bir modele ait form oluşturacaksak model dosyasını import etmeliyiz.
+	Kendimiz form oluşturacaksak bunu forms içindeki elemanlar ile oluşturmalıyız.
+	Eğer bir model için otomatik oluşturma yapacaksak "class Meta:" ile alt sınıf oluşturmalıyız.
+	Alanlar için kontroller yapmak istersek form sınıfı içined "def clean_alanAdi(self):" şeklimde methodlar oluşturulmalıdır.
+
+1. appdir/forms.py oluştur
+	• from django import forms
+	• from .models import ModelAdı
+
+	• class ModelFormClassName(forms.ModelForm veya forms.Form):
+
+		isim = forms.CharField(max_length=255, label="İsminiz")
+		telefon = forms.CharField(label='Telefonunuz', required=False)
+		mesaj =  forms.CharField(widget=forms.Textarea) => Charfieldi textareayaya çevirdim.
+
+		def clean_isim(self):
+			isim = self.cleaned_data['isim'];
+			if not isim or len(isim) < 3:
+				raise forms.ValidationError('İsim alanı boş bırakılamaz ve 3 karakterden az olamaz')
+			return isim
+
+		class Meta:
+			model = ModelName
+			fields = [
+				formda gösterilecek alanlar
+			]
+
+
+
+
+2. appdir/views.py
+	• from .forms import ModelFormClassName
+	• def view_name(request):
+		form = ModelFormClassName()
+
+		!> daha sonra bir html şablonunu render et ve formu gönder
+		return render(request, 'view_file.html', { 'form':form })
+
+		!> Hataları almak
+		form.errors
+
+		!> Html dosyasında formu ekrana bas
+		<form action="">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Gönder">
+		</form>
+
+		!> View dosyasından post alma
+		1. Yöntem
+		if request.method == "POST":
+			print(request.POST)
+			degisken = request.POST.get('key')
+			Model.objects.create({ ... })
+
+		2. Yöntem
+		if request.method == "POST":
+			nesne = Model(request.POST)
+			if nesne.is_valid():
+				nesne.save()
+
+		3. Yöntem
+		nesne = Model(request.POST or None)
+		if nesne.is_valid():
+			nesne.save()
+
+		!> NOT: .save işleminde save için commit=False parametresi girilirse. DB Kaydı olmaz ancak
+		   içi dolu bir nesneyi geri döndürebilir
+		   nesne = oldnesne.save(commit=False)
+		   nesne.ozellik = Değer
+		   nesne.save()
+
+		!!!! İŞLEMLERİ YAPARKEN cleaned_data olayını araştır.
+
+
+	!> HTML DOSYASI İÇERİSİNDE FORMU İSTERSEK EL İLE MANUEL DE YAZDIRABİLİRİZ.
+	> {% for f in form %}
+		  {% if f.errors %} {{ f.errors }} {% endif %} => Hata varsa göstermek
+		  {{ f.label }} => Label
+		  {{ f }} => input
+
+
+===========================================================================================================
+# YÖNLENDİRME İŞLEMLERİ
+	• from django.shortcuts import HttpResponseRedirect, redirect
+	• return HttpResponseRedirect('tam yol') !> Linki girilen adrese gider ör: '/makaleler/'
+	• return redirect('url_name') !> girilen url adresine gider ör:'post:list'
+
+
+
+
+===========================================================================================================
+# CKEDITOR KULLANMAK
+	> pip install django-ckeditor
+	→ projedir/settings.py
+		• INSTALLED_APPS = [ ..., 'ckeditor' ]
+		• STATIC_ROOT = os.path.join(BASE_DIR, 'staticfields')
+	> manage.py collectstatic
+	→ appdir/models.py
+		• from ckeditor.fields import RichTextField
+		!> zengin editör olacak yeri değiştir
+		content = RichTextField(options)
+
+	CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+	CKEDITOR_UPLOAD_PATH = 'uploads/'
+	CKEDITOR_IMAGE_BACKEND = "pillow"
+	CKEDITOR_CONFIGS = {
+	    'default': {
+	        'toolbar': None,
+	    },
+	}
+
+
+
+
+===========================================================================================================
+# DATABASE'DEN VERİ ÇEKMEK EKLEMEK VS
+
+	○ VERİ EKLEMEK
+		• Model.objects.create(hucre=deger, key=val, column=data, ...)
+
+		• nesne = Model(hucre=deger, key=deger)
+		• nesne.save()
+
+		• nesne = Model()
+		• nesne.key = val
+		• nesne.hucre = değer
+		• nesne.save()
+
+
+	○ TÜM VERİLERİ ÇEKMEK
+		• Model.objects.all()
+
+	○ TEK VERİ ÇEKMEK
+		• Model.objects.get(hucre=deger)
+
+	○ VE VEYA ŞEKLİNDE SORGU KURMAK VE VERİ YOKSA BAŞKA SAYFA RENDER ETMEK
+		• from django.db.models import Q
+		• try:
+			post = Model.objects.get( Q(col=val), Q(col=val) |Q(col=val) )
+			data = { 'post': post }
+			return render(request, 'dir/sablon1.html', data)
+		except:
+			return render(request, 'dir/sablon.html')
+
+
+	○ FİLTRELİ VERİLER ALMAK
+		• Model.objects.filter(filtreler)
+
+		• Model.objects.filter(hucre=değer)
+
+		!> Filtreleri eşittir küçüktür ile başlayan biten şeklinde uygulayabiliriz.
+			Bu yöntem için hücreden sonra 2 alt tire ile filtre adı uygulanır
+			Model.objects.filter(hucre__filtrekodu=değer)
+
+			__contains 		!> İçinde geçen
+			__startswith 	!> İle başlayan
+			__endswith 		!> İle biten
+			__in=[x, y, z]
+			__gt=X 	!> Büyük olan
+			__gte=X !> Büyük ve eşit olan
+			__lt 	!> küçük olanlar
+			__lte 	!> Eşit veya küçük olanlar
+			__range=(start_date, end_date) !> Arasında olan
+			__isnull=True
+
+	○ SIRALAMAK
+		• Model.objects.order_by('hucre') veya '-hucre'
+
+	○ SİLMEK
+		• nesne = Model.objects.get(par)
+		• nesne.delete()
+
+		• Model.objects.filter(pars).delete()
+
+	○ GÜNCELLEMEK
+		• nesne = Model.objects.get(args)
+		• nesne.key = val
+		• nesne.save
+
+		• Model.objects.get(args).update(key=val)
+
+===========================================================================================================
+# BİLGİ MESAJLARI GÖNDERMEK
+	• from django.contrib import messages
+	!> Daha sonra mesajı views.py içinde gerekli yerde yazıyoruz.
+	• messages.success(request, 'mesaj', extra_tags='classnameler')
+	• success, error, warning, debug
+
+	!> Mesajları aşağıdaki biçimde ekrana basabilirsiniz.
+	{% if messages %}
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+
+
+===========================================================================================================
+# STATIC DOSYALAR İLE ÇALIŞMAK
+	!> 	projenin ana dizininde yani manage.py ile aynı dizinde static klasörünü oluştur
+	→ settings.py
+		• STATIC_URL = '/static/'
+		• STATICFILES_DIRS = [
+			os.path.join(BASE_DIR, "static"),
+		  ]
+		!> DIRS kısmı sadece geliştirici ortamında olacaktır. Eğer siteyi yayına verirsek çalışmayacaktır.
+			Yayında kullanım için aşağıdaki kod gereklidir.
+		• STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+		!> STATIC_ROOT ismi farkı dosyada olursa aşağıdaki kod ile dosyaları static dosyasına taşıyabiliriz.
+		> manage.py collectstatic
+
+	!> Template dosyalarında kullanmak için
+		• {% load static %}
+		• {% static 'dosya_adi' %}
+
+
+
+===========================================================================================================
+# UPLOAD EDİLEN DOSYA İŞLEMLERİ
+
+	→ settings.py
+		• MEDIA_URL = '/media/'
+		• MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+	→ urls.py
+		• from django.conf.urls.static import static
+		• from django.conf import settings
+		• urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+	→ Html Şablonu
+		• {{ data.column.url }}
+
+	!> Html sayfasında form tagına enctype="multipart/form-data" eklemeyi unutma.
+	!> View sayfasında da form = ModelNameForm(request.POST or None, request.FILES or None) unutma
+
+	!> Dosya sadece resim dosyası olacaksa FileField yerine ImageField Kullan
+	   ama bunun için Pillow indirmen gerek
+	   > pip install Pillow
+
+	!> Dosyanın bağlı olduğu içerik silindiğinde resim silinmez bunun için ekstra uygulama gerekir.
+		> pip install django-cleanup
+		→ settings.py
+			• INSTALLED_APPS = [ ..., 'django_cleanup' ]
+
+	# Admin Panelde thumbnail göstermek
+
+		→ admin.py
+			• from django.utils.html import format_html
+			!> Aşağıdaki kodları oluşturduğunu admin modeli içine yazınız.
+			• def get_thumbnail(self, obj):
+				if obj.image:
+					return format_html( '<img src="" alt="">' )
+			• list_display = [ 'get_thumbnail' ]
+
+
+========================================================================================================
+# UPLOADDAN SONRA THUMBNAİL ALMA İŞLEMLERİ
+	from django.conf import settings
+	try:
+	    from PIL import Image, ImageOps
+	except ImportError:
+	    import Image
+	    import ImageOps
+
+
+	 class ModelAdi(models.Model):
+	 	cover = models.ImageUpload(upload_to="..", verbose_name="Görsel")
+
+	 	def save(self, *args, **kwargs)
+		 	image = Image.open( self.cover )
+		 	save_path = settings.MEDIA_ROOT+'/dir_name/'
+
+			# ImageOps compatible mode
+			if image.mode not in ("L", "RGB"):
+			    image = image.convert("RGB")
+
+
+			imageresize = image.resize((200,200), Image.ANTIALIAS)
+			imageresize.save( save_path + 'pre_' + self.cover.name, 'JPEG', quality=75)
+
+			image.thumbnail((200,200), Image.ANTIALIAS)
+			image.save( save_path + 'pre_' + self.cover.name, 'JPEG', quality=75)
+
+			imagefit = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
+			imagefit.save( save_path + 'pre_' + self.cover.name, JPEG', quality=75)
+
+			super(ModelAdi, self).save(args, kwargs)
+
+
+# DAHA KOLAY UPLOAD İŞLEMLERİ
+	> pip install django-stdimage
+	• INSTALLED_APPS = [ ..., 'stdimage' ]
+	• from stdimage import StdImageField
+
+	• cover = StdImageField(upload_to='path/to/img', blank=True, variations={'large': (640, 480), 'thumbnail': (100, 100, True)})
+
+
+===========================================================================================================
+# CRISPY FORM KULLANIMI
+	> pip install --upgrade django-crispy-forms
+	→ settings.py
+		• INSTALLED_APPS = (
+			    ...
+			    'crispy_forms',
+			)
+		• CRISPY_TEMPLATE_PACK = 'bootstrap3'
+	→ form_şablon.html
+		• {% load crispy_forms_tags %}
+		• {{ form|crispy }}
+
+
+============================================================================================================
+# GİRİŞ KONTROLÜ
+	• if request.user.is_authenticated() > Üye giriş yapmış mı?
+
+
+========================================================================================================
+#SLUG İŞLEMLERİ
+	→ appdir/models.py
+		• from django.utils.text import slugify
+		• seo_title = SlugField(unique=True)
+		• def save(self, *args, **kwargs):
+			• self.seo_title = slugify(self.title.replace('ı', 'i'))
+			• return super(ModelName, self).save(args, kwargs)
+
+		!> Aynı slug varsa yapılacak işlemin kodları.
+		• def get_unique_slug(self):
+			slug = slugify( self.title.replace('ı', 'i') )
+			unique_slug = slug
+			counter = 1
+			while ModelName.objects.filter(slug_col=unique_slug).exists():
+				unique_slug = '{}-{}'.format(slug, counter)
+				conuter += 1
+			return unique_slug
+
+
+	!> admin panelinde başlık yazıldığı anda slug alanını doldurabiliriz. Bunun için yapılması gereken
+	→ appdir/admin.py
+		• class AdminPanelModel(admin.ModelAdmin):
+			prepopulated_fields = { 'slug':('title', ) }
+
+
+========================================================================================================
+# POST İLE YAZAR İLİŞKİSİ KURMAK
+	→ models.py
+		• author = models.ForeignKey('auth.User', verbose_name='')
+
+	!> Kullanıcıların user modelleri -> from django.contrib.auth.models import User
+	!> Kullanıcıya ait postlaarı almak
+		-> user1 = User.objects.get(id=x)
+		   user1.modelname_set.all()
+
+	Yada related name belirlenir
+		author = models.ForeignKey('auth.User', related_name='postss')
+		user2 = User.objects.get(id=x)
+		user2.postss.all()
+
+
+========================================================================================================
+# RECAPTHCA KULLANIMI
+	> pip install django-recaptcha
+	→ settings.py
+		• INSTALLED_APPS = [ ..., 'captcha' ]
+		• RECAPTCHA_PUBLIC_KEY = 'key'
+		• RECAPTCHA_PRIVATE_KEY = 'key'
+		• NOCAPTCHA = True
+	→ appdir/forms.py
+		• from captcha.fields import ReCaptchaField
+		• class FormModel(forms....):
+			captcha = ReCaptchaField()
+
+
+========================================================================================================
+# ÇOĞU PROJEDE GEREKLİ OLAN EKLENTİLER
+	pip3 install django-recaptcha → Recaptcha eklentisi ayar yapmak gerekir.
+	pip3 install django-ckeditor → ckeditor eklentisi
+	pip3 install django-cleanup → Dosyaya bağlı bir içerik silindiğinde dosyayı silmek
+	pip3 install django-stdimage → Kolay upload işlemleri kırpma vs
+	pip3 install Pillow → Resim işlemleri için
+	pip3 install --upgrade django-crispy-forms → bootstrap formlarını kullanmak için
+
+
+
+=============================================================================================================
+# ADMIN PANEL BAŞLIĞINI DEĞİŞTİRMEK
+	from django.contrib import admin
+	admin.site.site_header = 'Sor Nedir Yönetim Paneli'
+	admin.site.site_title = 'Sor Nedir?'
+
+============================================================================================================
+# .PY DOSYALARINDA STATIC URL KULLANMAK
+	• from django.contrib.staticfiles.templatetags.staticfiles import static
+	• static('dosya_adi')
+
+============================================================================================================
+# ÇEREZ KULLANIMI COOKIE KULLANIMI ÇEREZLER, SESSION KULLANIMI OTURUM KULLANIMI OTURUMLAR
+	• request.COOKIES
+	• request.COOKIES['key']
+	• request.session
+	• request.session['key']
+
+	# ÇEREZ OLUŞTURMAK
+		• from django.http import HttpResponse
+		  def language(request, value):
+			response = HttpResponse( 'İşlem ile alakalı bir mesaj' )
+			response.set_cookie('key', value)
+			return response
+
+	# SESSION OLUŞTURMAK
+		• request.session['key'] = value
+
+	# ÇEREZ OKUMAK
+		• if 'key' in request.COOKIES:
+			var = request.COOKIES['key']
+
+	# SESSION OKUMAK
+		• if 'key' in request.session:
+			var = request.session['key']
+
+
+=====================================================================================
+# GİRİŞ ZORUNLULUĞU
+
+from django.contrib.auth.decorators import login_required
+@login_required
+def view fonksiyonu
+
+from django.contrib.auth import logout
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+
+
+=====================================================================================
+# EKRANA RESPONSE JSON BASMAK
+	• from django.http import JsonResponse
+	• return JsonResponse( dict data )
+
+
+
+=====================================================================================
+# WWW YÖNLENDİRMESİ
+	→ settings.py
+		• PREPEND_WWW = True
+
+
+
+
+
+
+=====================================================================================
+# SİTEMAP OLUŞTURMAK
+	→ settings.py 
+		INSTALLED_APPS = (
+		    ...
+		    'django.contrib.sitemaps',
+		    ...
+		)
+
+	→ appfolder/sitemaps.py // oluştur
+		• from django.contrib.sitemaps import Sitemap
+		• from appx.models import ModelName
+
+		• class ModelNameSitemap(Sitemap):
+			changefreq = "never"
+			priority = 0.5
+
+			def items(self):
+			return ModelName.objects.all()
+
+			def lastmod(self, obj):
+			return obj.create_date
+
+	→ urls.py
+		• from appfolder.sitemaps import ModelNameSitemap
+		• from django.contrib.sitemaps.views import sitemap
+
+		• path( 'sitemap.xml', sitemap, {'sitemaps': { 'sitemapname': ModelNameSitemap } } ),
+
+=====================================================================================
+
+# HER İÇERİK EKLENDİĞİNDE BU SİTEMAPI GOOGLE'A BİLDİRMEK
+	→ app/models.py
+		• from django.contrib.sitemaps import ping_google
+
+		• class ModelName(models.Model):
+
+			def save(self, **kwargs):
+		         instance = super(ModelName, self).save(**kwargs)
+		         ping_google()
+
+
+=====================================================================================
+
+# ROBOTS.TXT OLUŞTURMAK
+	→ app/views.py
+		• def robots(request):
+		    return render(request, 'robots.html', {}, content_type="text/plain" )
+
+	→ urls.py
+		path( 'robots.txt', app.views.robots),
