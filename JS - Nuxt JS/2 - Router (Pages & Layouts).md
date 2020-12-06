@@ -1,4 +1,5 @@
 # Pages
+Page ler Nuxt tarafından okunarak Server tarafında render edilen dosyalardır.
 
 ## Klasör/Dosya yöntemi ile Routing
 <hr>
@@ -23,8 +24,17 @@
     <!-- Sayfa yeniden yüklenerek bağlantıya gider -->
     <a href="/slug">Bağlantı Başlığı</a>
 
+    <!-- Tıklanınca direkt yönlendirmek -->
+    <a href="#" @click.prevent="$router.push('/slug/id')">Bağlantı</a>
+
+    <!-- Tıklanınca methodslarla yönlendirmek -->
+    <a href="#" @click.prevent="goUrl()">Bağlantı</a>
+
     <!-- vue js ile yönlenir -->
-    <nuxt-link to="/path" tag="a" class=""></nuxt-link>
+    <nuxt-link to="/slug" tag="a" class=""></nuxt-link>
+
+    <!-- Tıklanınca methodslarla yönlendirmek -->
+    <button @click="goUrl()">Bağlantı</button>
 </tamplate>
 
 <script>
@@ -121,13 +131,6 @@ Bütün page'ler bu layout içinden gösterilir. default.vue var olmak zorundad�
 #### 404 için layout oluşturmak
 
 - **layouts/*error.vue* dosyasını oluştur.
--
-
-
-
-
-
-
 
 
 
