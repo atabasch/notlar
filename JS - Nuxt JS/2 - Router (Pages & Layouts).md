@@ -63,10 +63,22 @@ Page ler Nuxt tarafından okunarak Server tarafında render edilen dosyalardır.
 export default{
 
     // NuxtJS e ait bir giriş methodu.
-    // içinde False return edilirse sayfa açılmaz.
+    // içinde False return edilirse sayfa hiç açılmaz.
     validate(arg){
         // parametre integer ise sayfa açılır değil ise hata verir;
         return /^\d+$/.test(arg.params.parName);
+    },
+
+    // Nuxt JS e ait bir method ancak içerisinde this methodu kullanılamaz. Bunun yerine 1. parametreyi kullanacaksın;
+
+    asyncData(context, callback){
+        let param = context.params.paramName;
+        let datas : {
+            key: val
+        }
+
+        // 1. parametre 404 sayfasına yönlendirmesi için.
+        callback(new Error(), datas); // 2. parametredeki oble içeriği VUE nin data objesine gönderilir.
     },
 
     create(){

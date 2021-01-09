@@ -19,3 +19,8 @@ Assets dosyası içerisindeki dosyalar minifize edilebilir, tek satır haline ge
     }
 </script>
 ```
+
+## İşlemlerin Server/Client hangi tarafta çalıştığını öğrenmek
+```js
+    process.client // true = client, false = server
+```

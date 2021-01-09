@@ -83,7 +83,7 @@ export default {
   -  **script** altındaki **methods** anahtar isimli objeye eklenir.
   - action methodları **context, payload** parametreleri alırlar.
     - **contex** action methodunda **context.commit("mutationmethod")** kullanılarak mutations çalıştırılır.
-    - **contex** içerisinde ***commit, dispatch, state, getters** vardır.
+    - **contex** içerisinde **commit, dispatch, state, getters** vardır.
       - **contex** yerine 1. parametreye **{commit}** yazarak sadece commit methodunu alırsın böylece **commit("mutationname")** şeklinde mutasyon çalıştırırsın.
     - **payload** yük anlamına gelir **dispatch** ile gönderilmiş olan parametreleri getirir.
     - **payload** kısmında veriyi obje olarak göndermek daha faydalı olabilir.
