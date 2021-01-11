@@ -1,12 +1,45 @@
-#### function.php de menü konumu oluşturmak
+### functions.php den menüleri aktifleştir.
 ```php
-function register_my_menu(){
-    register_nav_menu('menu-slug', __('Admin Menülerde görünecek isim'));
-}
-add_action('init', 'register_my_menu')
+add_theme_support( 'menus' );
 ```
 
-#### Tema Dosyasına
+#### function.php de menü konumu oluşturmak
+```php
+// 1. Yöntem
+register_nav_menus(
+    [
+        'header-menu'   => __('Açıklama'),
+        'main-menu'     => __('Açıklama'),
+        'footer-menu'   => __('Açıklama'),
+    ]
+);
+
+
+// Fonksiyon ile tek tek
+function register_my_menu(){
+    register_nav_menu('header-menu', __('Admin Menülerde görünecek isim'));
+    register_nav_menu('main-menu', __('Admin Menülerde görünecek isim'));
+    register_nav_menu('footer-menu', __('Admin Menülerde görünecek isim'));
+}
+add_action('init', 'register_my_menu')
+
+
+// Array ile multi olarak
+function register_my_menu(){
+    $menus = [
+        'header-menu'   => __('Açıklama'),
+        'main-menu'     => __('Açıklama'),
+        'footer-menu'   => __('Açıklama'),
+    ]
+    register_nav_menus($menus);
+}
+add_action('init', 'register_my_menus')
+
+
+```
+
+
+#### Tema Dosyasında menüyü yazdırmak
 ```php
 wp_nav_menu(array(
     'menu'                 => '',

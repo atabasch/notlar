@@ -27,4 +27,41 @@ add_action('wp_enqueue_scripts', 'add_scripts');
 ```
 
 
-#
+# Klasik Wordpress Düzenleyicisini Kullanmak
+```php
+add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
+```
+
+
+# Menüleri Aktifleştirmek
+```php
+add_theme_support( 'menus' );
+```
+
+
+
+# Öne çıkan kapak fotoğrafını aktif etmek
+```php
+add_theme_support( 'post-thumbnails' );
+
+//Görsel boyutlarını  özelleştirmek
+add_image_size( $name, $width, $height, $crop = false );
+add_image_size( 'small', 400, 300, true );
+add_image_size( 'medium', 850, 500 );
+```
+
+Ortam ayarlarından Görsel boyurlarını 0 olarak belirlersen varsayılan boyutlarda görseller oluşturmayacaktır.
+
+**NOT:** Bu kodları yazdıktan sonra yüklenen görseller kırpılmazlar. Eğer daha önce yüklenmiş fotoğrafları kırpmak istersen **Regenerate Thumbnails** eklentisini indir. By Alex Mills
+
+
+
+```php
+
+```
+
+
+
+```php
+
+```

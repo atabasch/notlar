@@ -37,7 +37,7 @@ Sayfada tıklanan yerin rengini kopyalar.
 Bir sitedeki nesnelerin boyutlarını öğrenmek için ekrana bi cetvel koyar.
 
 #### ► CE - Dimensions
-Site üzerindeki nesnelerin boyutları nesleer arası boşlık boyutları üzerinde gezerken gösterir.
+Site üzerindeki nesnelerin boyutlarını, nesneler arası boşluk miktarlarını nesne üzerinde gezerken gösterir.
 
 #### ► CE - Window Resizer
 Eklentide yerleşik olan ölçülere tıklandığında internet tarayıcısını o ölçülere ayarlar.
