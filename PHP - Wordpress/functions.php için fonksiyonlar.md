@@ -19,7 +19,7 @@ add_action('wp_enqueue_scripts', 'add_stylesheets');
 
 ```php
 function add_scripts(){
-        wp_enqueue_script('jquery'); // WP içinde vr olduğu için jquery otomatik eklenir.
+            wp_enqueue_script('jquery'); // WP içinde vr olduğu için jquery otomatik eklenir.
         wp_enqueue_script('custom_id', get_template_directory_uri().'/script.js', ); // script.css
         wp_enqueue_script('custom_id', 'https://.......', array('jquery'), '1.1', true); // 5. parametre true olursa script footer a eklenir.
 }
