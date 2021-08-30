@@ -165,8 +165,7 @@ systemctl restart nginx
 apt-get install mysql-server mysql-client
 
 # Sanırım maria db den sonra
-apt-get install default-mysql-server default-mysql-cliend
-```
+apt-get install default-mysql-server default-mysql-client
 
 ##### 3. 2} Mysql için kurulumu başlat.
 ```sh
@@ -236,7 +235,7 @@ nano /etc/vsftp.conf
 anonymous_enable=NO
 
 local_enable=YES    # Sv kullanıcıları ftp giriş iyapabilir.
-write_enable=YES    # 
+write_enable=YES    #
 
 # Login hesap kendi ev dizininden üst dizine çıkamasın.
 chroot_local_user=YES
