@@ -1,4 +1,4 @@
-# Pages
+# Manuel Pages İşlemleri
 Page ler Nuxt tarafından okunarak Server tarafında render edilen dosyalardır.
 
 ## Klasör/Dosya yöntemi ile Routing
@@ -147,7 +147,24 @@ Bütün page'ler bu layout içinden gösterilir. default.vue var olmak zorundad�
 
 
 
+# 2) Config Dosyası Üzerinden Router Ayarlamaları
 
+- **nuxt.congif.js** dosyasını açarak **router** adında bir obje oluştur.
+- **router** objesine **extendRoutes(routes, resolve)** methodunu ekle.
+- **extendRoutes** Methodunun içinde **routes** dizisine routerları ekle.
+
+```js
+router: {
+    // routes: pages içerisinde oluşturulmuş olan routing haritasını içinde tutar.
+    extendRoutes(routes, resolve){
+        routes.push({
+            name: 'about', // zorunlu değildir. Eğer pages klasörü içerisinde oluşmuş bir about.vue varsa bu zaten hata verecek. Routingin için pages içinde bulunmayan benzersiz bir ad.
+            path:'/about-us', // Address satırı
+            component: resolve(__dirname, "pages/about-us.vue") // çalıştırılacak vue dosyası
+        });
+    }
+}
+```
 
 
 

@@ -1,3 +1,5 @@
+obfuscation
+
 ## Lambda ile byte ı sayıya çevirmek
 ```python
 bin2int = lambda x: sum( [ int(x[i]) * pow(2, (len(x)-i-1)) for i in range(len(x)) ] )
