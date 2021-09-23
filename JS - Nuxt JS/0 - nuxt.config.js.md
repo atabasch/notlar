@@ -74,6 +74,23 @@ Global olarak bütün uygulamada etki etmesini istediğimiz css dosyalarını bu
     ]
 ```
 
+**NOT:** Bu bölümde sadece uygulama klasörleri içerisinde bulunan css dosyalarını import edebiliriz.
+Eğer bir linkten import etme işlemi yapıyorsak bunu **head** objesi içerisinde yapmak zorundayız.
+
+```js
+head: {
+    title: "appname",
+    meta: [
+        {charset: 'utf-8'},
+        {name: 'viewport', content: 'width=device-with, initial-scale=1'}
+    ],
+    link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+        {rel: 'stylesheet', href: 'http://uzak/sunucudan/bir/style/dosyasi.css'},
+    ]
+}
+```
+
 # 5) PLUGINS (JS DOSYASI EKLEMEK)
 
 İstediğin JS Dosyalarını global olarak tanımlayıp projeyte yüklemek için kullan
@@ -108,7 +125,7 @@ Global olarak bütün uygulamada etki etmesini istediğimiz css dosyalarını bu
     ]
 ```
 
-# 6) Modules <a name="modules">fas</a>
+# 6) Modules <a name="modules"></a>
 
 Nuxt modüllerini global olarak belirleyerek proje içindeki herhangi bir yerden kullanabilme imkanı sağlıyor.  
 Mesela **axios** modülünü gidip her componentte import etmek yerine NuxtJs e ait olan axiosu indirerek buradan dahil edip bütün componentler içerisinde kullanabilirsin.
@@ -119,6 +136,8 @@ Hangi modül nasıl indirilir ve nasıl kullanılır buradan dökümantasyonlar�
 **NOT:** Modüllerin NuxtJs in düzenlediği şekilde olmasını unutma.
 
 ### Axios Örneği Kullanmak
+
+Eğer proje generate ederken axios kullanı seçmişsem axios otomatik kurulmuştur. Ayar yapmaya gerek yok.
 
 #### 1. Axios İndir.
 > npm install @nuxtjs/axios

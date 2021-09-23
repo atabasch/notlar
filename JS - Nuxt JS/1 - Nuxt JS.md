@@ -24,6 +24,8 @@ Pre-render viewler yüklenir. ilk yüklemeden sonra uygulama SPA ya dönüştür
 
 > create-nuxt-app .
 
+**Kurulumu yaparken express'i seçersen senin için express.js kurar ve böylece içerden rest apini kullanabilirsin.**
+
 - Proje Adı
 - Description
 - Özel bir sunucu serverı seç (None)
@@ -51,7 +53,7 @@ Pre-render viewler yüklenir. ilk yüklemeden sonra uygulama SPA ya dönüştür
 - **store:** vuex için gerekli.
 
 
-# 
+#
 
 
 
