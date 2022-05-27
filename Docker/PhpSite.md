@@ -1,11 +1,40 @@
-# Dizin Yapısı
+# MANUEL KURULUMLAR
+
+#### Ağ Oluştur
+> docker network create damp_network
+
+#### MySql Kuurlumu Yap
+> docker run -d -p 3306:3306 --name damp_mysql --net damp_network -e MYSQL_ROOT_PASSWORD=aswserver mysql:8.0
+
+#### PhpMyAdmin kurulumu yap
+localhost:3307 ile girilir.
+> docker run -d -p 3307:80 --name damp_phpmyadmin --net damp_network --link damp_mysql:damp_localhost -e PMA_HOST=damp_localhost -e MYSQL_ROOT_PASSWORD=aswserver phpmyadmin:5.2-apache
+
+#### Apache2 ile Php 8.0 kurulumu
+Veritabanına bağlanırken host girdisi olacak "damp_localhost" yazılmalı.
+> docker run -d -p 80:80 --name damp_php --net damp_network --link damp_mysql:damp_localhost -v C:\Users\asw13tr\Desktop\works\asweb\web:/var/www/html -w /var/www/html php:8.0-apache
+
+#### SERVER İÇİNDE KURULUMLAR YAPILMALI
+
+> docker exec -it damp_php bash
+
+```bash
+docker-php-ext-install mysqli pdo pdo_mysql
+a2enmod rewrite
+```
+
+gibi komutlara ihtiyaç var.
+
+# Compose İle Kurulum
+
+### Dizin Yapısı
 - /database
 - /web
   - /php dosyaları
 - Dockerfile
 - docker-compose.yml
 
-# Dockerfile
+### Dockerfile
 
 ```Dockerfile
 FROM php:8.0-apache
@@ -18,7 +47,7 @@ RUN chown -R www-data:www-data . && echo "ServerName localhost" >> /etc/apache2/
 EXPOSE 80
 ```
 
-# docker-compose.yml
+### docker-compose.yml
 
 ```yml
 version: "3.7"
@@ -70,7 +99,7 @@ services:
 ```
 
 
-# Projede olması gereken database ayarlar
+### Projede olması gereken database ayarlar
 ```php
 $DB_HOST = 'db';
 $DB_POST = '3306';
