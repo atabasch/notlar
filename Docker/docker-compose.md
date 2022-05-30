@@ -2,6 +2,9 @@
 Uygulamaların tanımlanmasını ve çalıştırılmasını sağlayan bir docker aracıdır. Docker compose ile bir docker projesinin tüm ayalarını bir dosyaya yazarak çalıştırdığımızda dosya içindeki tüm özellikler ile  başlatabiliriz.
 **docker-compose.yml** dosyasının içerisinde birden fazla container tanımlayarak tek bir kod ile tümünü ayağa kaldırabiliriz. Docker dosya adı **docker-compose.yml** olmalı ve YAML formatında yazılmalıdır.
 
+# NOT:
+ **Eğer sunucu kurulumdan sonra platform içerisinde `apt-get update && apt-get upgrade -y` gibi kodlar çalıştırmak gerekiyorsa Dockerfile ile birlikte kullan. Dockerfile içerisinde FROM ile başla ve RUN komutuna kodlarını ekle.**
+
 # Docker Compose için kodlar
 ```YAML
 # Docker compose versiyonu şuan 3.9 geçerli 2022
