@@ -38,11 +38,11 @@ gibi komutlara ihtiyaç var.
 
 ```Dockerfile
 FROM php:8.0-apache
-COPY ./web /var/www/html
+COPY ./www /var/www/html
+COPY ./database /var/lib/mysql
 WORKDIR /var/www/html
 RUN apt-get update && apt-get upgrade -y
 RUN docker-php-ext-install mysqli pdo pdo_mysql
-RUN docker-php-ext-enable mysqli pdo pdo_mysql
 RUN chown -R www-data:www-data . && echo "ServerName localhost" >> /etc/apache2/apache2.conf && a2enmod rewrite
 EXPOSE 80
 ```
@@ -50,52 +50,60 @@ EXPOSE 80
 ### docker-compose.yml
 
 ```yml
-version: "3.7"
+version: "3.9"
 services:
-
-  #PHP
-  web:
-    container_name: ASW_WEB
-    build:
-      context: .
-      dockerfile: Dockerfile
+  php:
+    container_name: fwPhp
+    image: php:8.0-apache
     volumes:
-      - ./web:/var/www/html/
-    links:
-      - db
+      - ./www:/var/www/html
     ports:
-      - 80:80
       - 443:443
+      - 80:80
+    links:
+      - mysql:db_mysql_host
+    depends_on:
+      - mysql
+      - phpmyadmin
+    networks:
+      - fwNetwork
 
-  #MYSQL
-  db:
-    container_name: ASW_DB
+
+  mysql:
+    container_name: fwMysql
     image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
       - ./database:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: DATABASE_NAME
-      MYSQL_PASSWORD: aswserver
-      MYSQL_ROOT_PASSWORD: aswserver
-    command: --default-authentication-plugin=mysql_native_password
     ports:
       - 3306:3306
+    environment:
+      MYSQL_DATABASE: fwDatabase
+      MYSQL_USER: fwUser
+      MYSQL_PASSWORD: fwPassword
+      MYSQL_ROOT_PASSWORD: fwPassword
     networks:
-      - default
+      - fwNetwork
 
-  #PHPMYADMIN
+
   phpmyadmin:
-    container_name: ASW_PHPMYADMIN
-    image: phpmyadmin/phpmyadmin
+    container_name: fwPhpmyadmin
+    image: phpmyadmin:5.2.0
     restart: always
-    links:
-      - db:db
     ports:
       - 3307:80
     environment:
-      MYSQL_PASSWORD: aswserver
-      MYSQL_ROOT_PASSWORD: aswserver
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+    networks:
+      - fwNetwork
+
+
+networks:
+  fwNetwork:
+
 ```
 
 

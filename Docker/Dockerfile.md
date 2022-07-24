@@ -29,13 +29,27 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 ##### Container içindeki çalışma dizinibi belirler eğer dizin yoksa oluşturur.
 > WORKDIR /container/path
 
-##### Genelde yazılım paketleri kurulurken çalıştırılacak terminal komutları yazılır
+##### Image oluşturulurken server tarafında çalıştırılacak komutlar yazılır.
+**NOT:** `docker build -t imagename .` komutu çalıştığında container içerisinde çalışacak olan terminal komutlarıdır.
+
 > RUN terminal komutları
 
 > RUN apt-get update && apt-get upgrade -y
 
+##### Container çalıştırıldığında çalışan komutlar.
+**NOT:** RUN ile aynı işlemi görür ancak her `docker run ...` komutu çalıştığında çalışır.
 
 > CMD terminal komutları
+
+```bash
+CMD npm run start
+
+# veya
+
+CMD ["npm", "run", "start"]
+```
+
+##### ...
 
 > ENTRYPOINT terminal komutları
 
