@@ -169,4 +169,89 @@ io.Copy(newFile, file)
 <!--   -->
 {{block "content" .}} {{end}}
 
+
+
+<!-- INCLUIDE (Bu sistemde her html dosyasında bunu yazmak zorundasın index,list,vs) ayrıca ParseFiles içine include edilecekleri gönder -->
+{{ define "header" }}
+
+{{ end }}
+
+<!-- başka tema dosyasında header ı çağırır.  -->
+{{ template "header" }}
+
 ```
+
+
+# MVC OLUŞTURMAK 
+
+- main.go
+- controllers
+	- Dashboard.go 	`package controllers`
+	- User.go 		`package controllers`
+- views 
+- models 
+- helpers 
+- config 
+	- Routes.go 
+
+### Örnek Controllers 
+```go
+package controllers 
+
+import (
+	"github.com/julienschmidt/httprouter",
+	"html/template",
+	"net/http"
+)
+
+type User struct{}
+
+func (u User) Index(req *http.Request, res http.ResponseWriter, params httprouter.Params){
+	view, _ := template.ParseFiles("views/user/index.html", "views/user/header.html")
+
+	datas := make(map[string]interface{})
+	datas["title"] = "Value1"	// {{ .title }}
+	datas["desc"] = "Value2"	// {{ .desc }}
+	view.ExecuteTemplate(res, "index", datas)
+}
+```
+
+### Örnek Routes.go 
+```go 
+package üstklasöradı 
+
+import (
+	"github.com/julienschmidt/httprouter",
+	"projectname/controllers",
+	admin "projectname/controllers/admin",
+)
+
+fucn Routes() *httprouter.Router{
+	r := httprouter.New()
+	r.GET("/", controllers.Dashboard{}.Index)	// controller klasöri Dashboard.go Index methodu
+
+	r.GET("/user", controllers.User{}.Index)
+	r.GET("/user/get/:id", controllers.User{}.Get)
+
+	r.GET("/admin", admin.Dashboard{}.Index)
+	r.GET("/admin/posts", admin.Post{}.Index)
+
+	r.ServeFiles("/assets/*filepath", http.Dir("/src/public")) // *filepath yazılmalı //assets/xyz.css ler /src/public/xyz.css den gelir. 
+	return r
+}
+```
+
+### Örnek main.go 
+```go
+	package main
+
+	import (
+		"net/http",
+		"projectfolder/config"
+	)
+
+	func main(){
+		http.ListenAndServe(":80", config.Routes())
+	}
+``` 
+

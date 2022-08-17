@@ -20,6 +20,13 @@ var varName = new(StructName)
 varName.Key3 = val3
 ```
 
+## Structlara Method Eklemek 
+```go 
+func (x StructName) FuncName(p1 type, p2 type) returnType{
+    
+}
+```
+
 ## Extends Kalıtım
 Sınıflar olmadığı için kalıtımlarda yoktur. Çözüm olarak oluşturulan Structa başka bir struct anahtar olarak verilerek kullanılır.
 
