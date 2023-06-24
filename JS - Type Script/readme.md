@@ -33,12 +33,46 @@ let yil: number = 1991;
 let status: boolean;
 status = true;
 
+// çoklu değişken
+let var1 : string | number;
+
+// enum gibi değişken
+let var2 : "github"|"google"|"facebook"|"twitter";
+
+
+
 // Mixed değişken oluşturmak
 let other: any;
 other = "metin";
 other = false;
 other = 13;
 
+```
+
+### Tip Belirlemek
+
+Objeler için kendi tiplerinizi oluşturur.
+
+```ts
+// OLUŞTURMAK
+type User = {
+    username: string;
+    password: string;
+    email?: string;
+    allow_panel: bool;
+    contrast: '%40' | '%50'; // enum gibi
+    readonly sadeceokunabilir: number; // private mantığı
+}
+
+// KULLANIM 1
+let user: User;
+user.username = 'asw';
+
+// KULLANIM 2
+let user: User = {
+    username: 'asw',
+    //...
+};
 ```
 
 
