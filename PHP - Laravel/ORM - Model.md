@@ -266,7 +266,7 @@ Bir kullanıcının başka bir veritabanı tablosunda sadece 1 tane eşit satır
 #### -> EŞİTLEME
 • Users modeline gir ve class içinde bir fonksiyon oluştur ve içine dönmesini istediğin veriyi belirt
 
-→App/Users.php
+**App/Users.php**
 
 ```php
 public function phone(){
@@ -274,7 +274,7 @@ public function phone(){
 }
 ```
 
-→App/Phones.php
+**App/Phones.php**
 ```php
 public function user(){
 	return $this->belongsTo('App\Users', 'user_id_of_phones', 'user_id_of_users');
@@ -293,7 +293,7 @@ Phones::find(id)->user->username;
 Örneğin bir kullanıcının başka bir tabloda çok fazla satırı olduğunda kullanılır
 
 ### 4.2.1) VERİTABANLARI
-| App\Users.php | App\Comments.php |
+| **App\Users.php** | **App\Comments.php** |
 |---|---|
 | id | id |
 | username | comment |
@@ -301,7 +301,7 @@ Phones::find(id)->user->username;
 
 
 ### 4.2.2) EŞİTLEME
-→App/Users.php
+**App/Users.php**
     
 ```php
 public function comments(){
@@ -309,7 +309,7 @@ public function comments(){
 }
 ```
 
-→App/Comments.php
+**App/Comments.php**
 ```php
 public function user(){
     return $this->belongsTo('App\Users', 'user_id');
