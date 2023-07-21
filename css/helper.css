@@ -438,6 +438,19 @@
 .flex-shrink-0 { flex-shrink: 0 !important; }
 .flex-shrink-1 { flex-shrink: 1 !important; }
 
+.gap-0 { gap: 0 !important; }
+.gap-1 { gap: 0.25rem !important; }
+.gap-2 { gap: 0.5rem !important; }
+.gap-3 { gap: 0.75rem !important; }
+.gap-4 { gap: 1rem !important; }
+.gap-5 { gap: 1.25rem !important; }
+.gap-6 { gap: 1.5rem !important; }
+.gap-7 { gap: 2rem !important; }
+.gap-8 { gap: 4rem !important; }
+.gap-9 { gap: 6rem !important; }
+.gap-10 { gap: 10rem !important; }
+.gap-auto { gap: auto !important; }
+
 .flex-wrap { flex-wrap: wrap !important; }
 .flex-nowrap { flex-wrap: nowrap !important; }
 .flex-wrap-reverse { flex-wrap: wrap-reverse !important; }
@@ -687,3 +700,30 @@
 .opacity-90{ opacity: 0.90 !important; }
 .opacity-100{ opacity: 1 !important; }
 
+/* OVERFLOW */
+.overflow-hidden{ overflow: hidden !important; }
+.overflow-auto{ overflow: auto !important; }
+.overflow-scroll{ overflow: scroll !important; }
+.overflow-visible{ overflow: visible !important; }
+
+.overflow-x-hidden{ overflow-x: hidden !important; }
+.overflow-x-auto{ overflow-x: auto !important; }
+.overflow-x-scroll{ overflow-x: scroll !important; }
+.overflow-x-visible{ overflow-x: visible !important; }
+
+.overflow-y-hidden{ overflow-y: hidden !important; }
+.overflow-y-auto{ overflow-y: auto !important; }
+.overflow-y-scroll{ overflow-y: scroll !important; }
+.overflow-y-visible{ overflow-y: visible !important; }
+
+/* BORDER RADIUS */
+.radius-0{ border-radius: 0 !important; }
+.radius-1{ border-radius: .325rem !important; }
+.radius-2{ border-radius: .50rem !important; }
+.radius-3{ border-radius: .75rem !important; }
+.radius-4{ border-radius: 1rem !important; }
+.radius-5{ border-radius: 1.50rem !important; }
+.radius-6{ border-radius: 2rem !important; }
+.radius-7{ border-radius: 3rem !important; }
+.radius-circle{ border-radius: 50% !important; }
+.radius-pill{ border-radius: 50rem !important; }
