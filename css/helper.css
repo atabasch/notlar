@@ -317,6 +317,25 @@
 .text-uppercase {text-transform: uppercase !important; }  
 .text-capitalize {text-transform: capitalize !important; }
 
+
+/* TEXT ALIGN */
+.text-left,
+.text-start,
+.text-align-left,
+.text-align-start{ text-align: left !important; }
+
+.text-center,
+.text-align-center{ text-align: center !important; }
+
+.text-right,
+.text-end,
+.text-align-right,
+.text-align-end{ text-align: right !important; }
+
+.text-justify,
+.text-align-justify{ text-align: justify !important; }
+
+
 /* FONT WEIGHT */
 .fw-lighter{ font-weight: lighter !important; }
 .fw-light{ font-weight: 300 !important; }
@@ -540,8 +559,19 @@
 .flex-row-reverse { flex-direction: row-reverse !important; }
 .flex-column-reverse { flex-direction: column-reverse !important; }
 
+.flex-grow-none,
 .flex-grow-0 { flex-grow: 0 !important; }
+.flex-grow,
 .flex-grow-1 { flex-grow: 1 !important; }
+.flex-grow-2 { flex-grow: 2 !important; }
+.flex-grow-3 { flex-grow: 3 !important; }
+.flex-grow-4 { flex-grow: 4 !important; }
+.flex-grow-5 { flex-grow: 5 !important; }
+.flex-grow-6 { flex-grow: 6 !important; }
+.flex-grow-7 { flex-grow: 7 !important; }
+.flex-grow-8 { flex-grow: 8 !important; }
+.flex-grow-9 { flex-grow: 9 !important; }
+
 
 .flex-shrink-0 { flex-shrink: 0 !important; }
 .flex-shrink-1 { flex-shrink: 1 !important; }
@@ -841,7 +871,7 @@
 .input,
 .select,
 .dropdownlist,
-.text,
+.text,w
 .password,
 .form-input{
     padding: 7px 10px;
