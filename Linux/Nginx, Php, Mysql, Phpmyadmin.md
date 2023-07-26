@@ -61,7 +61,7 @@ server {
     server_name siteadi.uzanti;
     root /site/dosyalari/yolu;
 
-    index index.html index.php index.htm;
+    index index.php index.php index.htm;
 
     server_name siteadi.uzanti;
 
@@ -109,7 +109,7 @@ nano /etc/nginx/sites-available/default
 #...
 
 # index keyinin karşısına "index.php" ekle ki php dosyalarını tanısın.
-index index.html index.htm index.nginx-debian.html index.php;
+index index.php index.htm index.nginx-debian.html index.php;
 
 #...
 
