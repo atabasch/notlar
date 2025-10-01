@@ -1,7 +1,11 @@
 
 
 # [1]-> Diziler
-Diziler otomatik index alırlar ve tanımlanırken sadece value için değer yazılır.
+- Diziler otomatik index alırlar ve tanımlanırken sadece value için değer yazılır.
+- Sabittirler esnemezler eleman sayıları aynı kalır.
+- len ile boyutları alınır. 
+- Silme methodu yoktur. eleman silmek için yeni dizi oluşturulmalı.
+
 ```go
 dizi := [3]int{}
 dizi[0] = 10
