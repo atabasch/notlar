@@ -1,4 +1,4 @@
-# 2. Değişkenler
+# Değişkenler
 
 Değişken türleri
 | Tip | Convert |     | 
@@ -22,7 +22,7 @@ Değişken türleri
 | complex64 | complex64(x)     | Complex numbers which contain float32 as a real and imaginary component. |
 | complex128 | complex128(x)    | Complex numbers which contain float64 as a real and imaginary component. |
 
-### 2.1 Dinamik değişken oluşturmak.
+### 1. Dinamik değişken oluşturmak.
 `var`anahtar kelimesi ile değişken adı pelirlenir ve eşittir ile değer atanır. Girilen değere göre `go` değişken için bir tür çıkarımı yapar. Değişkenin değeri daha sonra farklı bir türe değiştirilirse hata alınır.
 
 ```go
@@ -31,7 +31,7 @@ var age = 34        // int
 var pi = 3.14       // float64
 ```
 
-### 2.2 Tip ile değişken oluşturmak
+### 2. Tip ile değişken oluşturmak
 
 Değişkenler türü belirtilerek oluşturulur. Değer girilmez ise zero değer alırlar. string boş, int 0 ve boolean false olur.
 
@@ -43,7 +43,7 @@ var active bool     // = false
 var version string = "1.0.1" // = "1.0.1"
 ```
 
-### 2.3 Kısa Bildirim.
+### 3 Kısa Bildirim.
 Oluşturulması kolay yerel değişkenlerdir. Sadece fonksiyon içinde oluşturulur, paket düzeyinde oluşturulmaz. 
 
 ```go
@@ -51,7 +51,7 @@ name := "furkan"
 yas := 34
 ```
 
-### 2.4 Sabit Değişkenler
+### 4 Sabit Değişkenler
 
 Sabit dğeişkenler bir kez oluşturulur ve değerleri bir daha değiştirilemez. Sabit kalıcı tüm uygulama boyunca geçerli olacak şeyler için kullanılır. 
 **Büyük harfle başlamalıdır.**
@@ -61,7 +61,7 @@ const Pi = 3.14;
 const Version string = "0.1.1"
 ```
 
-### 2.5 Çoklu Atama
+### 5. Çoklu Atama
 birden fazla değişkeni tek satırda oluşturmak için kullanılır.
 
 ```go
@@ -91,3 +91,25 @@ func main(){
 }
 ```
 
+# Ortam Değişkeni (.env)
+
+Proje içindeki .env dosyasındaki değişkenleri almak için
+
+```go
+import "os"
+
+// Tüm ortam değişkenlerinde gezmek
+for _, env = rande os.Environ(){
+
+}
+
+
+uname := os.Getenv("USERNAME")
+domain := os.Getenv("USERDOMAIN")
+
+os.Getenv("GOROOT")
+
+os.Getenv("GOPATH")
+
+os.Getenv("HOMEPATH")
+```

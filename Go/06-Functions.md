@@ -47,6 +47,24 @@ var toplama, cikarma = topla_cikar(10, 5)
 var toplama, _ = topla_cikar(10, 5)
 ```
 
+
+
+## 1. Değişken adıyla sonuç dönmek
+
+return keywordünü kullanırken bir şey yazmaya gerek yoktur dönecek değeri belirtirken girilen değişken adı geri döner.
+
+```go
+func funcName(par1 type, par2 type) (result type, err type){
+
+    result  = val
+    err     = val
+    return // hiç bir şey yazmaya gerek yok
+}
+
+var result, err = funcName(val1, val2)
+```
+
+
 # 2. Referans çağırmak
 
 Bu işlemde fonksiyon içine gönderilen değişken referans alınır. Fonksiyona verilen parametre bellekte yeniden oluşturulmaz var olan üzerinde değişiklik yapılır.
@@ -73,4 +91,31 @@ var xa, xb = katla(a, &b)
     xb  = 20  
 */
 
+```
+
+
+# 3. Anonim fonksiyonlar oluşturmak
+
+Anonim yani isimsiz fonksiyonlardır.
+
+```go
+var (
+	carp = func(l int, b int) int {
+		return l * b
+	}
+)
+
+func main() {
+	fmt.Println(carp(20, 30))
+}
+
+
+//veya
+func main() {
+
+    func(a int, b int) {
+        // işlemler
+    }(10, 20)
+
+}
 ```

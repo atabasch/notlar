@@ -6,7 +6,7 @@
 - Struct'lar tıpkı string, int, float, bool gibi kendi veri tibinizi oluşturmaya yarar.
 - Değişken oluştururken değişken türü olarak Structur adı verilir.
 
-## Oluşturma ve Çağırma
+# Oluşturma ve Çağırma
 
 ```go
 // Structur adının ilk harfi büyük olur
@@ -29,7 +29,7 @@ var varName = new(StructName)
 varName.Key3 = val3
 ```
 
-## Struct'a method ekleme
+# Struct'a method ekleme
 
 Struct'ı yazarken değil yazıp blokdan çıktıktan sonra bir fonksiyon oluşturup bu struct'a dahil olduğunu söylersin
 
@@ -48,6 +48,64 @@ func (s *CustomStructName) Deactivate(){
 ```
 
 
+# Extends Ekleme
+
+Class olmadığı için extends de yok. Ama bunu yeni Struct içine başka bir Struct adını yazarak çözebiliriz.  
+değişken adı belirleme sadece Struct adını yaz.
+
+
+```go
+
+type Product struct {
+    Name string
+    Price float32 
+    Stock int
+}
+
+type Ram struct {
+    Product
+    Gb int
+    Mhz int
+}
+
+type Monitor struct {
+    Product
+    Hz int
+    Resolution string
+}
+
+
+// YUKARIDAKİ DURUMDA RAM VE MONİTÖR PRODUCT İÇİNDEKİ DEĞERLERİ ALABİLİR.
+
+var p1 = Ram{ Product{"Kingston X", 40, 10}, 8, 3200  }
+var p2 = Ram{ Product{"Toshiba Y", 65, 20}, 16, 4500  }
+var p3 = Monitor{ Product{"Lenovo Legion", 250, 10}, 140, "1920x1080"  }
+var p4 = Monitor{ Product{"Gigabyte Z", 220, 25}, 165, "1024x768"  }
+```
+
+
+# Consturctur
+
+- Go'da Constructlar yoktur. 
+- Bir fonksiyon oluşturur ve Sturct'ı o fonksiyonda çağırırsın. 
+- Değerleri girer ve geriye sınıfı döndürürsün. 
+- Fonksiyonun geri dönen değerine struct adını * pointer ile birlikte yaz.
+
+```go
+type Urun struct{
+    //...
+}
+
+func constructUrun(name string, stock int) *Urun{ //funcName'in önemi yok
+    h := new(Urun)
+    h.Name = "Klavye"
+    h.Stock = 20
+    return h
+}
+
+x := constructUrun()
+```
+
 #### Pointer amacı
 
 - Bir struct oluşturduğunda önce içine tip değişkenleri eklersin.
@@ -63,7 +121,7 @@ func (t *CustomStructName) MethodName(){
 ```
 
 
-## JSON ile çalışma (sık işine yarar)
+### JSON ile çalışma (sık işine yarar)
 ```go
 type Post struct {
     Id int `json:"id"`
@@ -75,7 +133,7 @@ type Post struct {
 
 
 
-## Genel bir örnek
+### Genel bir örnek
 
 ```go
 package main
