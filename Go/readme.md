@@ -18,6 +18,7 @@
 14. [GIN frameworkü ile REST API](14-Framework-Gin.md)
 15. [Eşzamanlı İşlemler - (go, chan)](15-Go-Chan.md)
 16. [Klasör ve Dosya İşlemleri - (os)](16-Folder-and-Files.md)
+17. [JSON veri tipi ile çalışmak](17-Json.md)
 
 # Paketler
 | Paket Adı       | Ne İşe Yarar?                                 | Ne Zaman Kullanılır?                                            |

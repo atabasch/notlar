@@ -153,7 +153,7 @@ r.POST("/upload", func(c *gin.Context) {
 | `c.FormFile("name")`    | Formdan tek dosya alır                 |                                                |
 | `c.SaveUploadedFile()`  | Dosya kaydeder                         |                                                |
 | `c.PostForm("field")`   | Form verisi alır                       |                                                |
-| `c.ShouldBindJSON(&obj)`| JSON parse eder (request body)         |                                                |
+| `c.ShouldBindJSON(&obj)`| JSON parse eder (request body)         | Json olarak gelen değerleri sturct içindeki anahtarlara yazar                                               |
 | `c.Query("q")`          | URL query param alır                   |                                                |
 | `c.Param("id")`         | Path param alır                        |                                                |
 | `c.Redirect(code, url)` | Yönlendirme yapar                      |                                                |
@@ -189,6 +189,18 @@ func main() {
         c.JSON(200, users)
     })
     r.Run()
+}
+```
+
+
+
+### JSON olarak gelen parametreleri dinamik olarak almak
+```go
+func (ctx *gin.Context){
+    var params map[string]any
+    err := c.ShouldBindJSON(&params)
+
+    // params["key"]
 }
 ```
 
